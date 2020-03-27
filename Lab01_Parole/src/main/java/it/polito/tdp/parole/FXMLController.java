@@ -3,7 +3,7 @@ package it.polito.tdp.parole;
 import it.polito.tdp.parole.model.Parole;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 
 public class FXMLController {
 	
-	Parole elenco ;
+	Parole elenco;
 
     @FXML
     private ResourceBundle resources;
@@ -30,16 +30,82 @@ public class FXMLController {
     private TextArea txtResult;
 
     @FXML
+    private TextField txtTempo;
+
+    @FXML
     private Button btnReset;
 
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	txtTempo.clear();
+    	txtResult.clear();
+    	
+    	int flag = 0;
+    	
+    	if (txtParola.getText().length() == 0) {
+    		txtResult.setText("Attenzione! Non è stata inserita alcuna parola.\n\n");
+    		flag = 1;
+    	}
+    	
+    	char[] c = txtParola.getText().toCharArray();
+    	for (char ch: c) {
+    		if (Character.isDigit(ch)) {
+    			txtResult.setText("Attenzione! È presente almeno un carattere numerico.\n\n");
+    			flag = 1;
+    		}
+    		if ((Character.isWhitespace(ch))) {
+    			txtResult.setText("Inserire solo una parola per volta!\n\n");
+        		flag = 1;
+    		}
+    	}
+    	
+    	for (String s: elenco.getElenco())
+    		if (s.compareTo(txtParola.getText()) == 0) {
+    			txtResult.setText("Parola già presente nell'elenco.\n\n");
+        		flag = 1;
+    		}
+    	
+    	String output = new String();
+    	if (flag == 0)
+    		elenco.addParola(txtParola.getText());
+    	Collections.sort(elenco.getElenco());
+    	if (elenco.getElenco().size() > 0) {
+    		for (int i=0; i<elenco.getElenco().size()-1; i++)
+    			output += elenco.getElenco().get(i) + "\n";
+    		output += elenco.getElenco().get(elenco.getElenco().size()-1);
+    	}
+    	txtResult.appendText(output);
+    	txtParola.clear();
+    	txtTempo.setText(Long.valueOf(System.nanoTime()).toString());
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	txtTempo.clear();
+    	txtParola.clear();
+    	txtResult.clear();
+    	elenco.reset();
+    	txtTempo.setText(Long.valueOf(System.nanoTime()).toString());
+    }
+
+    @FXML
+    void handleCancella(ActionEvent event) {
+    	txtTempo.clear();
+    	txtResult.clear();
+    	boolean eliminata;
+    	eliminata = elenco.cancella(txtParola.getText());
+    	if (eliminata == false)
+    		txtResult.setText("Impossibile! La parola selezionata non è nell'elenco.\n\n");
+    	String output = new String();
+    	Collections.sort(elenco.getElenco());
+    	if (elenco.getElenco().size() > 0) {
+    		for (int i=0; i<elenco.getElenco().size()-1; i++)
+    			output += elenco.getElenco().get(i) + "\n";
+    		output += elenco.getElenco().get(elenco.getElenco().size()-1);
+    	}
+    	txtResult.appendText(output);
+    	txtParola.clear();
+    	txtTempo.setText(Long.valueOf(System.nanoTime()).toString());
     }
 
     @FXML
@@ -47,8 +113,11 @@ public class FXMLController {
         assert txtParola != null : "fx:id=\"txtParola\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnInserisci != null : "fx:id=\"btnInserisci\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert txtTempo != null : "fx:id=\"txtTempo\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
 
         elenco = new Parole() ;
     }
 }
+
+
