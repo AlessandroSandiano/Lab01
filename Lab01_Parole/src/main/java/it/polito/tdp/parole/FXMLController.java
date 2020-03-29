@@ -82,7 +82,7 @@ public class FXMLController {
     	txtResult.appendText(output);
     	txtParola.clear();
     	//txtTempo.setText(Long.valueOf(System.nanoTime()).toString());  SBAGLIATO (si deve calcolare solo l'aggiunta della singola parola!)
-    	txtTempo.setText("[Inserimento]: " + Double.toString(((double) (fine - inizio))/1e9) + "s");
+    	txtTempo.setText("[Inserimento]: " + Double.toString(((double) (fine - inizio))/1e9) + " seconds");
     }
 
     @FXML
@@ -93,7 +93,7 @@ public class FXMLController {
     	long inizio = System.nanoTime();
     	elenco.reset();
     	long fine = System.nanoTime();
-    	txtTempo.setText("[Reset]: " + Double.toString(((double) (fine - inizio))/1e9) + "s");
+    	txtTempo.setText("[Reset]: " + Double.toString(((double) (fine - inizio))/1e9) + " seconds");
     }
 
     @FXML
@@ -115,9 +115,7 @@ public class FXMLController {
     	}
     	txtResult.appendText(output);
     	txtParola.clear();
-    	if (eliminata == true) {
-    		txtTempo.setText("[Cancella]: " + Double.toString(((double) (fine - inizio))/1e9) + "s");
-    	}
+    	txtTempo.setText("[Cancella]: " + Double.toString(((double) (fine - inizio))/1e9) + " seconds");
     }
 
     @FXML
