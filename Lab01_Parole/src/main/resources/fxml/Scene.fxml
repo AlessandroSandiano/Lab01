@@ -28,7 +28,7 @@
                </children>
             </HBox>
             <TextArea fx:id="txtResult" editable="false" prefHeight="200.0" prefWidth="261.0" wrapText="true" />
-            <TextField fx:id="txtTempo" editable="false">
+            <TextField fx:id="txtTempo" editable="false" promptText="Time Bar">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>

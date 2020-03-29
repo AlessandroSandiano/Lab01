@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Parole {
 	
-	//private List<String> lista = new LinkedList<String> ();
-	private List<String> lista = new ArrayList<String> ();
+	private List<String> lista = new LinkedList<String> ();
+	//private List<String> lista = new ArrayList<String> ();
 		
 	public Parole() {
 	}

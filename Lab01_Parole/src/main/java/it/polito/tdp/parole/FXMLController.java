@@ -66,8 +66,13 @@ public class FXMLController {
     		}
     	
     	String output = new String();
-    	if (flag == 0)
+    	long inizio = 0;
+    	long fine = 0;
+    	if (flag == 0) {
+    		inizio = System.nanoTime();
     		elenco.addParola(txtParola.getText());
+    		fine = System.nanoTime();
+    	}
     	Collections.sort(elenco.getElenco());
     	if (elenco.getElenco().size() > 0) {
     		for (int i=0; i<elenco.getElenco().size()-1; i++)
@@ -76,7 +81,8 @@ public class FXMLController {
     	}
     	txtResult.appendText(output);
     	txtParola.clear();
-    	txtTempo.setText(Long.valueOf(System.nanoTime()).toString());
+    	//txtTempo.setText(Long.valueOf(System.nanoTime()).toString());  SBAGLIATO (si deve calcolare solo l'aggiunta della singola parola!)
+    	txtTempo.setText("[Inserimento]" + Double.toString(((double) (fine - inizio))/1e9) + "s");
     }
 
     @FXML
@@ -84,8 +90,10 @@ public class FXMLController {
     	txtTempo.clear();
     	txtParola.clear();
     	txtResult.clear();
+    	long inizio = System.nanoTime();
     	elenco.reset();
-    	txtTempo.setText(Long.valueOf(System.nanoTime()).toString());
+    	long fine = System.nanoTime();
+    	txtTempo.setText("[Reset]" + Double.toString(((double) (fine - inizio))/1e9) + "s");
     }
 
     @FXML
@@ -93,7 +101,9 @@ public class FXMLController {
     	txtTempo.clear();
     	txtResult.clear();
     	boolean eliminata;
+    	long inizio = System.nanoTime();
     	eliminata = elenco.cancella(txtParola.getText());
+    	long fine = System.nanoTime();
     	if (eliminata == false)
     		txtResult.setText("Impossibile! La parola selezionata non è nell'elenco.\n\n");
     	String output = new String();
@@ -105,7 +115,9 @@ public class FXMLController {
     	}
     	txtResult.appendText(output);
     	txtParola.clear();
-    	txtTempo.setText(Long.valueOf(System.nanoTime()).toString());
+    	if (eliminata == true) {
+    		txtTempo.setText("[Cancella]" + Double.toString(((double) (fine - inizio))/1e9) + "s");
+    	}
     }
 
     @FXML
