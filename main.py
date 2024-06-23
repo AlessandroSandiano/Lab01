@@ -20,12 +20,10 @@ class Domanda:
         self. testo = testo
         self. difficoltà = difficoltà
         self.risposte = risposte
-'''
-In Python non occorre dichiarare, negli attributi passati come parametri nel costruttore, se si tratta o meno di liste:
-self. risposte = []       risulta pertanto una dichiarazione ERRATA
-'''
-
-
+    '''
+    In Python non occorre dichiarare, negli attributi passati come parametri nel costruttore, se si tratta o meno di liste:
+    self. risposte = []       risulta pertanto una dichiarazione ERRATA
+    '''
     def __repr__(self):
         return f"{self.testo}{self.difficoltà}\n{self.risposte}\n\n"
 
@@ -40,11 +38,13 @@ while (contRighe+5) < len(listaRighe):
     listaDomande.append(Domanda(listaRighe[contRighe], int(listaRighe[contRighe+1][0 : -1]), [listaRighe[contRighe+2], listaRighe[contRighe+3], listaRighe[contRighe+4], listaRighe[contRighe+5]]))
     contRighe += 7
 
-print("Benvenuto in Trivia Game!\n")
+print("Benvenuto in Trivia Game! Le domande saranno poste in ordine crescente di difficoltà.")
+print("Per giocare, occorre digitare il nome o il numero corrispondente alla risposta che si vuole dare.\n")
 
 punteggio = 0
 sottolista = []
 rispostaCorretta = True
+
 
 while rispostaCorretta == True:
     for o in listaDomande:
@@ -62,22 +62,37 @@ while rispostaCorretta == True:
         counter = 0
         while counter < 4:
             if domandaCorrente.risposte[ordineRisposte[counter]][-1] == '\n':
-                print (domandaCorrente.risposte[ordineRisposte[counter]], end='')
-            else: print (domandaCorrente.risposte[ordineRisposte[counter]])
+                print (f"{counter+1}) {domandaCorrente.risposte[ordineRisposte[counter]]}", end='')
+            else: print (f"{counter+1}) {domandaCorrente.risposte[ordineRisposte[counter]]}")
             counter += 1
         flag = 0
         while flag == 0:
+            print ("Risposta: ", end = '')
             rispostaUtente = input ()
             counter = 0
             for p in domandaCorrente.risposte:
                 if rispostaUtente.__eq__(p[0 : -1]):
                     flag = 1
+            while counter < 4:
+                if rispostaUtente.__eq__(str(counter+1)):
+                    flag = 1
+                    break
+                counter += 1
             if flag == 0:
-                print ("La risposta data non è tra quelle selezionabili, dunque riprova.")
+                print ("La risposta data non è tra quelle selezionabili; riprova.")
+
         if rispostaUtente.__eq__(domandaCorrente.risposte[0][0 : -1]):
             print ("\nBravo, risposta corretta!\n\n")
             sottolista.clear()
             punteggio += 1
+        elif counter < 4:
+            if ordineRisposte[counter] == 0:
+                print("\nBravo, risposta corretta!\n\n")
+                sottolista.clear()
+                punteggio += 1
+            else:
+                print("Risposta sbagliata. FIne del gioco. Punteggio:", punteggio)
+                rispostaCorretta = False
         else:
             print ("Risposta sbagliata. FIne del gioco. Punteggio:", punteggio)
             rispostaCorretta = False
