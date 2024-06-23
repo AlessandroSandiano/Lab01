@@ -20,11 +20,10 @@ class Domanda:
         self. testo = testo
         self. difficoltà = difficoltà
         self.risposte = risposte
-
-
-
-#In Python non occorre nemmeno dichiarare, negli attributi, se si tratta o meno di liste:
-#self. risposte = []       risulta pertanto una dichiarazione ERRATA
+'''
+In Python non occorre dichiarare, negli attributi passati come parametri nel costruttore, se si tratta o meno di liste:
+self. risposte = []       risulta pertanto una dichiarazione ERRATA
+'''
 
 
     def __repr__(self):
@@ -111,6 +110,7 @@ while counter < len(listaGiocatori)-1:
 file.write(f"{listaGiocatori[len(listaGiocatori)-1].nome} {listaGiocatori[len(listaGiocatori)-1].punteggio}")
 file.close()
 
-
-#controllo che rispostaUtente e counter possano essere lasciati dentro il while e siano
-#visibili dal resto del codice (cosa che in Java non sarebbe possibile)
+'''
+rispostaUtente e counter possono essere lasciati dentro il while e sono ugualmente
+visibili dal resto del codice (cosa che in Java non sarebbe possibile)
+'''
